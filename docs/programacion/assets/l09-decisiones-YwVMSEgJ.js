@@ -1,0 +1,66 @@
+import{n as e}from"./rolldown-runtime-WkwZ5CU-.js";import{on as t,wt as n}from"./focusOutline.stylex-DrAznLUO.js";import{t as r}from"./Slider-DfkcMSs_.js";import{t as i}from"./Switch-f9eRSCpU.js";import{a,c as o,i as s,o as c,r as l,s as u}from"./inputAria-DhvhVBtm.js";import{n as d,t as f}from"./Codigo-C5ecggs5.js";import{n as p,o as m,r as h,t as g}from"./Simulador-DSeuCkT1.js";var _=e(t(),1),v=n(),y=(0,v.jsxs)(`p`,{children:[`Hasta ahora los programas iban en línea recta. Con `,(0,v.jsx)(f,{children:`if`}),` el programa `,(0,v.jsx)(`strong`,{children:`decide`}),`: si se cumple una condición, hace una cosa; si no, otra. Es el núcleo del Reto 1 (control de flujo, 40 % de la nota) y la forma de aplicar un IVA u otro según lo que elija el usuario.`]}),b=[[`Marcas de campo`,(0,v.jsxs)(v.Fragment,{children:[(0,v.jsx)(f,{children:`if (condición) { … }`}),`, opcionalmente `,(0,v.jsx)(f,{children:`else if (…)`}),` y un `,(0,v.jsx)(f,{children:`else`}),` final. Para menús: `,(0,v.jsx)(f,{children:`switch`}),` con `,(0,v.jsx)(f,{children:`case`}),`, `,(0,v.jsx)(f,{children:`break`}),` y `,(0,v.jsx)(f,{children:`default`}),`.`]})],[`Se confunde con`,`Varios if sueltos. Con else if solo se ejecuta UNA rama; con if sueltos pueden ejecutarse varias.`],[`Hábitat`,`Validar datos, clasificar por rangos y elegir opciones de un menú. En el reto: el tipo de IVA.`],[`Regla de clase`,`Llaves siempre, aunque solo haya una instrucción dentro.`]],x=[{id:`if`,titulo:`if`},{id:`if-else`,titulo:`if-else`},{id:`else-if`,titulo:`else if y rangos`},{id:`switch`,titulo:`switch`},{id:`llaves`,titulo:`Las llaves`},{id:`practica`,titulo:`Práctica de clase`}],S=`if (nota >= 9)
+    Console.WriteLine("Sobresaliente");
+else if (nota >= 7)
+    Console.WriteLine("Notable");
+else if (nota >= 5)
+    Console.WriteLine("Aprobado");
+else
+    Console.WriteLine("Suspenso");`,C=`if (nota >= 9)
+    Console.WriteLine("Sobresaliente");
+if (nota >= 7)
+    Console.WriteLine("Notable");
+if (nota >= 5)
+    Console.WriteLine("Aprobado");
+if (nota < 5)
+    Console.WriteLine("Suspenso");`;function w(){let[e,t]=(0,_.useState)(8),[n,a]=(0,_.useState)(!0),o=[e>=9,e>=7,e>=5,e<5],s=[`Sobresaliente`,`Notable`,`Aprobado`,`Suspenso`],c,l={};if(n){let e=o.findIndex((e,t)=>t<3?e:!0);c=[s[e]],l[e*2+2]=`ok`}else c=s.filter((e,t)=>o[t]),o.forEach((e,t)=>{e&&(l[t*2+2]=c.length>1?`error`:`ok`)});return(0,v.jsxs)(u,{titulo:`¿Qué rama se ejecuta?`,children:[(0,v.jsx)(r,{label:`nota = ${e}`,value:e,onChange:e=>t(e),min:0,max:10,step:.5,valueDisplay:`none`}),(0,v.jsx)(`div`,{style:{margin:`14px 0 4px`},children:(0,v.jsx)(i,{label:n?`Con else if (una sola rama)`:`Con if sueltos`,value:n,onChange:a})}),(0,v.jsx)(d,{codigo:n?S:C,marcas:l}),(0,v.jsx)(`div`,{className:`consola`,style:{minHeight:0},"aria-label":`Salida`,"aria-live":`polite`,children:c.map(e=>(0,v.jsx)(`div`,{className:`c-linea`,children:e},e))}),!n&&c.length>1&&(0,v.jsxs)(`p`,{className:`resultado`,"data-ok":`false`,style:{marginTop:12},children:[(0,v.jsxs)(`strong`,{children:[c.length,` mensajes para una sola nota.`]}),` Un `,p(e),` cumple varias condiciones a la vez. Con else if se para en la primera que se cumple.`]})]})}var T=`double saldo = 30;
+Console.Write("Importe de la compra: ");
+double compra = double.Parse(Console.ReadLine());
+if (saldo >= compra)
+{
+    Console.WriteLine("Compra autorizada");
+}
+else
+{
+    Console.WriteLine("Saldo insuficiente");
+}`,E=function*(e){yield e.en(1),e.def(`saldo`,`double`,30),yield e.en(2),e.write(`Importe de la compra: `);let t=yield e.leer(3),n=h(t);e.def(`compra`,`double`,n);let r=30>=n;yield e.en(4,`¿saldo >= compra? 30 >= ${p(n)} → ${r}. Con if-else SIEMPRE se ejecuta exactamente uno de los dos bloques.`),r?(yield e.en(6),e.writeLine(`Compra autorizada`)):(yield e.en(10,`La condición fue false: salta directamente al bloque else.`),e.writeLine(`Saldo insuficiente`))},D=`Console.Write("Peso del paquete: ");
+double peso = double.Parse(Console.ReadLine());
+double tarifa;
+if (peso <= 2)
+{
+    tarifa = 4;
+}
+else if (peso <= 5)
+{
+    tarifa = 7;
+}
+else
+{
+    tarifa = 12;
+}
+Console.WriteLine($"Tu tarifa es de {tarifa} €");`,O=function*(e){yield e.en(1),e.write(`Peso del paquete: `);let t=yield e.leer(2,`Escribe un peso con coma decimal: 1,45 · 3 · 6,45`),n=h(t);e.def(`peso`,`double`,n),yield e.en(3,`La variable tarifa se crea UNA vez fuera de los if y cada rama solo la actualiza.`),e.def(`tarifa`,`double`,`(sin asignar)`),yield e.en(4,`¿peso <= 2? ${p(n)} <= 2 → ${n<=2}`);let r;n<=2?(yield e.en(6),r=4):(yield e.en(8,`No era <= 2, así que ya sabemos que es mayor que 2. ¿peso <= 5? → ${n<=5}`),n<=5?(yield e.en(10),r=7):(yield e.en(14,`Ninguna anterior se cumplió: el else final cubre «más de 5».`),r=12)),e.def(`tarifa`,`double`,r),yield e.en(16),e.writeLine(`Tu tarifa es de ${r} €`)},k=`Console.WriteLine("1. Agua  2. Café  3. Té");
+Console.Write("Elige: ");
+int opcion = int.Parse(Console.ReadLine());
+switch (opcion)
+{
+    case 1:
+        Console.WriteLine("Aquí tienes tu agua");
+        break;
+    case 2:
+        Console.WriteLine("Aquí tienes tu café");
+        break;
+    case 3:
+        Console.WriteLine("Aquí tienes tu té");
+        break;
+    default:
+        Console.WriteLine("Opción no válida");
+        break;
+}`,A=function*(e){yield e.en(1),e.writeLine(`1. Agua  2. Café  3. Té`),yield e.en(2),e.write(`Elige: `);let t=yield e.leer(3),n=m(t);e.def(`opcion`,`int`,n),yield e.en(4,`switch compara opcion (${n}) con cada case, de arriba abajo.`);let r={1:[7,`Aquí tienes tu agua`],2:[10,`Aquí tienes tu café`],3:[13,`Aquí tienes tu té`]},[i,a]=r[n]??[16,`Opción no válida`];yield e.en(i-1,r[n]?`Coincide con case ${n}.`:`No coincide con ningún case: entra en default.`),yield e.en(i),e.writeLine(a),yield e.en(i+1,`break: sal del switch. Sin él, C# da error de compilación (no deja «caer» al siguiente case).`)};function j(){let[e,t]=(0,_.useState)(!1),[n,p]=(0,_.useState)(15);return(0,v.jsxs)(v.Fragment,{children:[(0,v.jsxs)(s,{id:`if`,titulo:`if`,children:[(0,v.jsxs)(`p`,{children:[`La forma más simple: si la condición entre paréntesis es `,(0,v.jsx)(f,{children:`true`}),`, se ejecuta el bloque; si es `,(0,v.jsx)(f,{children:`false`}),`, se salta y no pasa nada.`]}),(0,v.jsx)(d,{codigo:`if (edad >= 18)
+{
+    Console.WriteLine("Eres mayor de edad");
+}`}),(0,v.jsxs)(`p`,{children:[`La condición siempre es una expresión que da `,(0,v.jsx)(f,{children:`bool`}),`: una comparación (`,(0,v.jsx)(f,{children:`edad >= 18`}),`), una combinación (`,(0,v.jsx)(f,{children:`edad >= 16 && tieneEntrada`}),`) o una variable bool.`]})]}),(0,v.jsxs)(s,{id:`if-else`,titulo:`if-else`,children:[(0,v.jsxs)(`p`,{children:[`Dos caminos excluyentes: si se cumple, uno; si no, el otro. `,(0,v.jsx)(`strong`,{children:`Siempre`}),` se ejecuta exactamente uno de los dos.`]}),(0,v.jsx)(g,{titulo:`Clase del 21/10 · ¿alcanza el saldo?`,codigo:T,programa:E,pruebas:[`25`,`30`,`42,90`]}),(0,v.jsx)(c,{dice:`«En las estructuras dobles, por cada IF, debe haber un ELSE».`,realidad:`Es una tautología: una estructura doble es justamente if + else. Pero un if puede ir perfectamente sin else, como en la sección anterior. No hace falta poner else si no tienes nada que hacer en el otro caso.`})]}),(0,v.jsxs)(s,{id:`else-if`,titulo:`else if y rangos`,children:[(0,v.jsxs)(`p`,{children:[`Para más de dos caminos se encadenan condiciones con `,(0,v.jsx)(f,{children:`else if`}),`. C# las prueba en orden y `,(0,v.jsx)(`strong`,{children:`se para en la primera que se cumple`}),`. El `,(0,v.jsx)(f,{children:`else`}),` final recoge todo lo que no cumplió ninguna.`]}),(0,v.jsxs)(`p`,{children:[`Por eso el orden importa. En la lámina interactiva de arriba, si pusieras `,(0,v.jsx)(f,{children:`nota >= 5`}),` la primera, un 9,5 diría «Aprobado» y nunca llegaría a «Sobresaliente». Con rangos: `,(0,v.jsx)(`strong`,{children:`de lo más restrictivo a lo menos`}),`, o de menor a mayor con `,(0,v.jsx)(f,{children:`<=`}),`, como en la tarifa.`]}),(0,v.jsx)(a,{fecha:`21/10`,children:(0,v.jsx)(`p`,{children:`La profesora explicó por qué no valen varios if independientes para las notas: «una nota de 8 cumple ≥ 7 y ≥ 5, y saldrían dos mensajes». Con else if «solo se puede cumplir una».`})})]}),(0,v.jsxs)(s,{id:`switch`,titulo:`switch`,children:[(0,v.jsxs)(`p`,{children:[`Cuando decides según el `,(0,v.jsx)(`strong`,{children:`valor exacto`}),` de una variable, como el número de un menú, `,(0,v.jsx)(f,{children:`switch`}),` se lee mejor que una cadena de else if.`]}),(0,v.jsx)(g,{titulo:`Ejercicio 3 de clase · menú de bebidas`,codigo:k,programa:A,pruebas:[`1`,`2`,`3`,`7`]}),(0,v.jsxs)(`ul`,{children:[(0,v.jsxs)(`li`,{children:[(0,v.jsx)(f,{children:`case valor:`}),` marca el bloque para ese valor.`]}),(0,v.jsxs)(`li`,{children:[(0,v.jsx)(f,{children:`break;`}),` sale del switch. En C# es obligatorio al final de cada case con instrucciones (error CS0163 si falta).`]}),(0,v.jsxs)(`li`,{children:[(0,v.jsx)(f,{children:`default:`}),` recoge cualquier otro valor. Es opcional, pero en un menú es tu red de seguridad.`]})]}),(0,v.jsx)(o,{children:(0,v.jsx)(`p`,{children:`El menú de tipos de IVA (1 general, 2 reducido, 3 superreducido) encaja perfecto con un switch, o con if/else if como en el ejercicio 15. Las dos opciones aparecen en la solución esperada del reto.`})})]}),(0,v.jsxs)(s,{id:`llaves`,titulo:`Las llaves`,children:[(0,v.jsxs)(`p`,{children:[`Si un if tiene `,(0,v.jsx)(`strong`,{children:`una sola`}),` instrucción, las llaves pueden omitirse. Pero si luego añades una segunda línea sin llaves, esa línea queda `,(0,v.jsx)(`strong`,{children:`fuera`}),` del if y se ejecuta siempre, aunque la sangría engañe a la vista:`]}),(0,v.jsxs)(u,{titulo:`La sangría miente`,children:[(0,v.jsxs)(`div`,{className:`fila-controles`,children:[(0,v.jsx)(r,{label:`edad = ${n}`,value:n,onChange:e=>p(e),min:10,max:30,valueDisplay:`none`}),(0,v.jsx)(i,{label:`Con llaves`,value:e,onChange:t})]}),(0,v.jsx)(d,{codigo:e?`if (edad >= 18)
+{
+    Console.WriteLine("Puedes votar");
+    Console.WriteLine("Recuerda llevar el DNI");
+}`:`if (edad >= 18)
+    Console.WriteLine("Puedes votar");
+    Console.WriteLine("Recuerda llevar el DNI");`}),(0,v.jsxs)(`div`,{className:`consola`,style:{minHeight:0},"aria-live":`polite`,children:[n>=18&&(0,v.jsx)(`div`,{className:`c-linea`,children:`Puedes votar`}),(n>=18||!e)&&(0,v.jsx)(`div`,{className:`c-linea`,children:`Recuerda llevar el DNI`})]}),!e&&n<18&&(0,v.jsxs)(`p`,{className:`resultado`,"data-ok":`false`,style:{marginTop:12},children:[(0,v.jsx)(`strong`,{children:`Error lógico:`}),` con `,n,` años no puede votar, pero le pedimos el DNI igualmente. La segunda línea nunca estuvo dentro del if.`]})]}),(0,v.jsx)(a,{fecha:`28/10`,children:(0,v.jsx)(`p`,{children:`«Acostumbraos a usar llaves siempre». Es la recomendación de la profesora y evita este error tan difícil de ver.`})})]}),(0,v.jsxs)(s,{id:`practica`,titulo:`Práctica de clase`,children:[(0,v.jsx)(`p`,{children:`El ejercicio de la tarifa de envío (21/10): hasta 2 kg cuesta 4 €, de más de 2 hasta 5 kg cuesta 7 €, y más de 5 kg, 12 €. Fíjate en tres decisiones de diseño que se comentaron en clase:`}),(0,v.jsxs)(`ul`,{children:[(0,v.jsxs)(`li`,{children:[(0,v.jsx)(f,{children:`peso`}),` es `,(0,v.jsx)(f,{children:`double`}),`, porque un paquete puede pesar 3,75 kg.`]}),(0,v.jsxs)(`li`,{children:[(0,v.jsx)(f,{children:`tarifa`}),` se declara `,(0,v.jsx)(`strong`,{children:`una vez, fuera`}),` de los if, y cada rama solo le da valor. Si la declaras dentro de cada if, al acabar el if ya no existe.`]}),(0,v.jsxs)(`li`,{children:[`Los rangos van de menor a mayor, y el `,(0,v.jsx)(f,{children:`else`}),` final cubre «más de 5» sin necesidad de condición.`]})]}),(0,v.jsx)(g,{titulo:`Ejercicio 2 de clase · tarifa de envío`,codigo:D,programa:O,pruebas:[`1,45`,`2`,`3,75`,`6,45`]}),(0,v.jsx)(`p`,{children:`Prueba con los límites exactos: 2 y 5. Probar los bordes es la forma de encontrar errores en los rangos (¿< o <=?). En clase se insistió en probar también valores negativos en el ejercicio de la edad: ¿qué debería pasar con −3 años?`})]}),(0,v.jsx)(`div`,{id:`autoevaluacion`,children:(0,v.jsx)(l,{id:`decisiones`,preguntas:[{p:`Con if / else if / else, ¿cuántas ramas pueden ejecutarse?`,opciones:[`Todas las que se cumplan`,`Exactamente una`,`Ninguna o una`,`Dos como máximo`],ok:1,porque:`Con else final siempre se ejecuta exactamente una. (Sin else final, podría no ejecutarse ninguna.)`},{p:(0,v.jsx)(v.Fragment,{children:`Con la tarifa de clase, ¿cuánto paga un paquete de 5 kg?`}),opciones:[`4 €`,`7 €`,`12 €`,`Ninguna`],ok:1,porque:`5 <= 5 es true: entra en la segunda rama.`},{p:(0,v.jsxs)(v.Fragment,{children:[`¿Qué pasa si quitas un `,(0,v.jsx)(f,{children:`break`}),` en un case con instrucciones?`]}),opciones:[`Pasa al siguiente case`,`No compila (CS0163)`,`Se ejecuta default`,`Nada`],ok:1,porque:`C# no permite «caer» de un case a otro de forma implícita.`},{p:`Ordenas: if (nota >= 5) Aprobado; else if (nota >= 9) Sobresaliente. Con nota 9,5…`,opciones:[`Sobresaliente`,`Aprobado`,`Los dos`,`Error`],ok:1,porque:`La primera condición ya se cumple y la segunda nunca se mira. El orden importa.`}]})})]})}export{w as Destacado,j as default,y as entradilla,b as ficha,x as secciones};

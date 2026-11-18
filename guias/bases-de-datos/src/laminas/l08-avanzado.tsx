@@ -1,0 +1,105 @@
+import { useState } from 'react';
+import { Autoevaluacion, Bloque, Panel, ParaElReto, T } from '../ui/guia.tsx';
+import { DiagramaER } from '../ui/Er.tsx';
+
+export const entradilla = (
+  <p>El reto se queda en dos entidades y una relación 1:N. Los apuntes de la unidad siguen: atributos que solo admiten una lista de valores, atributos que pertenecen a la relación y no a las entidades, relaciones entre tres entidades o de una entidad consigo misma y, al final, cómo viajan las claves cuando el diagrama se convierte en tablas. No entra en el Reto 1, pero sí en los tests y es la base del Reto 2.</p>
+);
+
+export const ficha: [string, React.ReactNode][] = [
+  ['Marcas de campo', 'C· delante de un atributo, un rombo que toca tres cajas, un rombo que sale y vuelve a la misma caja, o una clave que aparece en otra tabla.'],
+  ['Se confunde con', 'Lo que pide el Reto 1. Nada de esta lámina hace falta para entregarlo; no lo metas en el PDF.'],
+  ['Hábitat', 'Los tests de la Unidad 1 (Modelización y diagramas ER I y II) y el Reto 2, donde el catálogo pasa a tablas.'],
+  ['Regla clave', '1:N → la clave del lado 1 viaja al lado N. N:M → tabla nueva.'],
+];
+
+export const secciones = [
+  { id: 'codificables', titulo: 'Atributos codificables' },
+  { id: 'atributos-rel', titulo: 'Atributos en las interrelaciones' },
+  { id: 'ternarias', titulo: 'Interrelaciones ternarias' },
+  { id: 'reflexivas', titulo: 'Interrelaciones reflexivas' },
+  { id: 'propagacion', titulo: 'Propagación de claves' },
+];
+
+// ---------- Destacado: a dónde viaja la clave ----------
+const CASOS = {
+  '1:N': { titulo: 'CLIENTE (1,1) hace 1:N (0,n) PEDIDO', tablas: ['CLIENTE (cod_cliente PK, nombre)', 'PEDIDO (cod_pedido PK, fecha, cod_cliente FK → CLIENTE)'], nota: 'La clave del lado 1 viaja al lado N. Aquí no se elige: cada pedido tiene un solo cliente, así que cabe en una columna.' },
+  '1:1': { titulo: 'SUPERMERCADO (1,1) dirige 1:1 (1,1) DIRECTOR', tablas: ['SUPERMERCADO (cod_super PK, nombre)', 'DIRECTOR (dni PK, nombre, cod_super FK → SUPERMERCADO)'], nota: 'Viaja en un solo sentido, y se evita propagar hacia el lado (0,1), que dejaría nulos. Si los dos son (1,1) puedes elegir; lo más lógico, que el director sepa qué supermercado dirige.' },
+  'N:M': { titulo: 'ESTUDIANTE (1,n) se matricula N:M (0,n) ASIGNATURA', tablas: ['ESTUDIANTE (dni PK, nombre)', 'ASIGNATURA (cod_asig PK, nombre)', 'MATRICULA (dni FK, cod_asig FK, PK compuesta (dni, cod_asig))'], nota: 'No cabe en una columna: un estudiante tendría varias asignaturas. Se crea una tabla nueva con las dos claves.' },
+  ternaria: { titulo: 'SOCIO – JUEGO – SITIOWEB, relacionados en cada sesión', tablas: ['SOCIO (dni PK, …)', 'JUEGO (titulo PK, …)', 'SITIOWEB (url PK)', 'SESION (dni FK, titulo FK, url FK, …)'], nota: 'Tabla nueva con las claves primarias de las tres entidades.' },
+  reflexiva: { titulo: 'EMPLEADO supervisa a EMPLEADO', tablas: ['EMPLEADO (dni PK, nombre, dni_jefe FK → EMPLEADO)'], nota: 'La entidad recibe su propia clave como un atributo más, con el nombre del rol (jefe).' },
+} as const;
+type Caso = keyof typeof CASOS;
+
+export function Destacado() {
+  const [c, setC] = useState<Caso>('1:N');
+  const x = CASOS[c];
+  return (
+    <Panel titulo="¿A dónde viaja la clave?">
+      <div className="opciones" role="group" aria-label="Tipo de interrelación">
+        {(Object.keys(CASOS) as Caso[]).map((k) => <button key={k} type="button" className="opcion" aria-pressed={c === k} onClick={() => setC(k)}>{k}</button>)}
+      </div>
+      <p style={{ margin: '0 0 10px', fontWeight: 700 }}>{x.titulo}</p>
+      <ul style={{ listStyle: 'none', margin: '0 0 14px', padding: 0, display: 'grid', gap: 6 }}>
+        {x.tablas.map((t) => <li key={t} style={{ padding: '8px 12px', borderRadius: 10, border: '1px solid var(--t4)', background: 'var(--t1)', font: '500 14px var(--f-codigo)', overflowWrap: 'anywhere' }}>{t}</li>)}
+      </ul>
+      <p className="resultado" style={{ margin: 0 }}>{x.nota}</p>
+    </Panel>
+  );
+}
+
+export default function Cuerpo() {
+  return (
+    <>
+      <Bloque id="codificables" titulo="Atributos codificables">
+        <p>Un atributo <strong>codificable</strong> (<code>C·</code>) solo admite un conjunto cerrado de valores: el tipo de producto, el cargo, el estado civil, el día de la semana. Cuando se cree la tabla se controlará con una restricción <code>CHECK</code>:</p>
+        <ul>
+          <li><code>CHECK (EstadoCivil IN ('Soltero', 'Casado', 'Divorciado', 'Viudo'))</code></li>
+          <li><code>CHECK (Calificacion BETWEEN 0 AND 100)</code></li>
+        </ul>
+        <p>Si la lista de valores crece, cambia o necesita datos propios (los idiomas de una academia, con su nivel y su precio), deja de ser un atributo y pasa a ser una <strong>entidad</strong>. Por eso, en el reto, CATEGORIA es entidad: tiene código y nombre propios y puede existir sin productos.</p>
+      </Bloque>
+
+      <Bloque id="atributos-rel" titulo="Atributos en las interrelaciones">
+        <p>Algunos datos no son de ninguna de las dos entidades, sino del hecho de que se relacionen. La <strong>fecha de un préstamo</strong> no es del libro ni del usuario: nace cuando el usuario se lleva el libro. Esos atributos se dibujan colgando del rombo.</p>
+        <p>Si se marca un atributo de la relación como <code>P·</code> (la fecha, por ejemplo), la misma pareja puede relacionarse más de una vez: el mismo usuario puede llevarse el mismo libro en fechas distintas.</p>
+      </Bloque>
+
+      <Bloque id="ternarias" titulo="Interrelaciones ternarias">
+        <p>Una interrelación <strong>ternaria</strong> une tres entidades a la vez, cuando todas se relacionan con todas: el curso tiene alumnos y aulas, el aula tiene alumnos y está en un curso. El ejercicio 3 de los apuntes lo plantea con una plataforma de videojuegos: en cada sesión se registra el socio, el juego y la web de la empresa que lo redirigió.</p>
+        <p>Los apuntes dan dos soluciones equivalentes: un rombo ternario entre SOCIO, JUEGO y SITIOWEB, o convertir la sesión en una <strong>entidad</strong> SESION relacionada con las otras tres. La segunda suele ser más fácil de leer.</p>
+      </Bloque>
+
+      <Bloque id="reflexivas" titulo="Interrelaciones reflexivas">
+        <p>Una interrelación <T def="Interrelación de una entidad consigo misma; también se llama unaria o recursiva.">reflexiva</T> relaciona ocurrencias de la misma entidad. Hay que nombrar los <strong>roles</strong> de cada lado: en «empleado supervisa a empleado», uno hace de jefe y otro de subordinado.</p>
+        <ul>
+          <li><strong>1:1</strong>: emparejamientos (poco frecuente).</li>
+          <li><strong>1:N</strong>: jerarquías, como un empleado y su supervisor directo. La más común.</li>
+          <li><strong>N:M</strong>: la amistad entre personas.</li>
+        </ul>
+      </Bloque>
+
+      <Bloque id="propagacion" titulo="Propagación de claves">
+        <p>Al pasar el E-R a tablas, las interrelaciones se convierten en <T def="Clave primaria de una tabla copiada en otra para relacionarlas.">claves ajenas</T>. Hacia dónde viaja la clave depende de la cardinalidad; la lámina de arriba tiene los cinco casos de los apuntes.</p>
+        <Panel titulo="El caso 1:N, dibujado" ancho>
+          <div className="tabla-scroll">
+            <DiagramaER etiqueta="CLIENTE (1,1) hace 1:N (0,n) PEDIDO" a={{ nombre: 'CLIENTE', atributos: ['P · cod_cliente', 'nombre'] }} b={{ nombre: 'PEDIDO', atributos: ['P · cod_pedido', 'fecha', 'cod_cliente (FK)'] }} rel="hace" tipo="1:N" cardA="(1,1)" cardB="(0,n)" flechaB />
+          </div>
+          <p style={{ margin: '12px 0 0', fontSize: 15, color: 'var(--t9)' }}>En el modelo relacional, <code>cod_cliente</code> aparece dentro de PEDIDO. En un diagrama E-R puro no se escribe: la flecha y el rombo ya lo dicen.</p>
+        </Panel>
+        <ParaElReto>
+          <p>El Reto 1 dice: «todavía no hay que propagar claves». Así que tu PRODUCTO <strong>no</strong> lleva <code>cod_categoria</code>. Guarda esta lámina para el Reto 2 (22 de enero), donde el mismo catálogo se construye en tablas.</p>
+        </ParaElReto>
+      </Bloque>
+
+      <div id="autoevaluacion">
+        <Autoevaluacion id="avanzado" preguntas={[
+          { p: 'En una relación 1:N, ¿a dónde viaja la clave?', opciones: ['Del lado N al lado 1', 'Del lado 1 al lado N', 'A una tabla nueva', 'No viaja'], ok: 1, porque: 'La clave del lado con máximo 1 se copia como clave ajena en el lado N.' },
+          { p: 'Una relación N:M se convierte en…', opciones: ['Una columna en cada tabla', 'Una tabla nueva con las dos claves', 'Un atributo multivalorado', 'Una vista'], ok: 1, porque: 'No se pueden meter varios valores en una columna.' },
+          { p: '«Un empleado supervisa a otros empleados» es una interrelación…', opciones: ['Ternaria', 'Reflexiva', 'N:M obligatoria', 'Codificable'], ok: 1, porque: 'Relaciona la entidad consigo misma, con roles de jefe y subordinado.' },
+          { p: 'La fecha en que un usuario se lleva un libro es un atributo…', opciones: ['Del libro', 'Del usuario', 'De la interrelación', 'Derivado'], ok: 2, porque: 'Solo existe cuando las dos ocurrencias se relacionan.' },
+        ]} />
+      </div>
+    </>
+  );
+}

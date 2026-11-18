@@ -1,0 +1,1 @@
+var e=e=>`(${e.min},${e.max===`N`?`n`:`1`})`,t=(e,t)=>e===1&&t===1?`1:1`:e===`N`&&t===`N`?`N:M`:`1:N`,n=(e,t)=>t>=e.min&&(e.max===`N`||t<=e.max);function r(e,t){return{inicial:n(e,1)&&n(t,1)&&n(t,2),vacia:n(t,0),unaPorProducto:!n(e,2),sinHuerfanos:!n(e,0)}}export{t as i,r as n,e as r,n as t};

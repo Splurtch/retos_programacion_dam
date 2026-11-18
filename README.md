@@ -10,6 +10,8 @@ Repositorio de **Synji · Digital Synapse** para compartir mi aprendizaje de pro
 
 ---
 
+[Abrir el cuaderno de estudio DAM](https://splurtch.github.io/retos_programacion_dam/) · [Cómo actualizar las guías](guias/README.md)
+
 ## 01 / Catálogo de retos
 
 | Reto | Qué construye | Qué se practica | Estado |
