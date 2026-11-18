@@ -1,0 +1,19 @@
+# Archivos generados por .NET
+**/bin/
+**/obj/
+.vs/
+*.user
+*.suo
+TestResults/
+*.log
+# Credenciales y configuración privada
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+*.pem
+# Sistema y paquetes de entrega
+.DS_Store
+Thumbs.db
+*.zip
