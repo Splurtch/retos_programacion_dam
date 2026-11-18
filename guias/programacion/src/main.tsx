@@ -6,7 +6,12 @@ import { InternationalizationProvider } from '@astryxdesign/core/i18n';
 import esES from '@astryxdesign/core/locales/es-ES.json';
 import { App, type Tema } from './App.tsx';
 import { guardar, leer } from './ui/guia.tsx';
+import { Portada } from './Portada.tsx';
 import './styles.css';
+
+const esPortada = import.meta.env.VITE_PORTADA === '1';
+if (esPortada) document.title = 'Cuaderno de estudio DAM';
+const Vista = esPortada ? Portada : App;
 
 function Raiz() {
   const [tema, setTema] = useState<Tema>(() => leer('tema', 'dark'));
@@ -18,7 +23,7 @@ function Raiz() {
   return (
     <Theme theme={neutralTheme} mode={tema}>
       <InternationalizationProvider locale="es-ES" messages={{ 'es-ES': esES }}>
-        <App tema={tema} setTema={setTema} />
+        <Vista tema={tema} setTema={setTema} />
       </InternationalizationProvider>
     </Theme>
   );

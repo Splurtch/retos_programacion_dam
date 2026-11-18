@@ -14,7 +14,7 @@ const useRuta = () => useSyncExternalStore(suscribir, () => location.hash.replac
 
 export type Tema = 'system' | 'light' | 'dark';
 
-function Isotipo({ size = 30 }: { size?: number }) {
+export function Isotipo({ size = 30 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
       <defs>
@@ -38,7 +38,7 @@ const REDES: [string, string, ComponentType][] = [
 const TEMAS: [Tema, string, ComponentType][] = [['system', 'Según el dispositivo', IcoPantalla], ['light', 'Clara', IcoSol], ['dark', 'Oscura', IcoLuna]];
 
 // Control segmentado de apariencia: el pulgar se desliza y el nuevo tema se revela en círculo desde el botón.
-function SelectorTema({ tema, setTema }: { tema: Tema; setTema: (t: Tema) => void }) {
+export function SelectorTema({ tema, setTema }: { tema: Tema; setTema: (t: Tema) => void }) {
   const cambiar = (t: Tema, e: MouseEvent<HTMLButtonElement>) => {
     if (t === tema) return;
     const html = document.documentElement;
@@ -210,7 +210,7 @@ function diasHasta(fecha: string) {
   return Math.ceil((fin.getTime() - Date.now()) / 86_400_000);
 }
 
-const foco = (e: PointerEvent<HTMLElement>) => {
+export const foco = (e: PointerEvent<HTMLElement>) => {
   const r = e.currentTarget.getBoundingClientRect();
   e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`);
   e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`);
@@ -274,15 +274,9 @@ function Indice({ marca }: { marca?: string }) {
               const v = vistas.includes(l.id);
               return (
                 <li key={l.id}>
-                  <a className="tarjeta" href={enlace(l.id)} onPointerMove={foco}>
-                    <span className="t-cab">
-                      <span className="t-num">{l.num}</span>
-                      {(h || v) && <span className="t-estado" data-hecho={h || undefined}>{h ? 'Autoevaluada' : 'Abierta'}</span>}
-                    </span>
-                    <span className="t-titulo">{l.titulo}</span>
-                    <span className="t-res">{l.resumen}</span>
-                    <span className="t-ir" aria-hidden="true">{l.id === marca ? 'Seguir aquí' : 'Abrir lámina'}<Icon icon={IcoFlecha} size="sm" /></span>
-                  </a>
+                  <Tarjeta href={enlace(l.id)} numero={l.num} titulo={l.titulo} resumen={l.resumen}
+                    accion={l.id === marca ? 'Seguir aquí' : 'Abrir lámina'}
+                    estado={h ? 'Autoevaluada' : v ? 'Abierta' : undefined} />
                 </li>
               );
             })}
@@ -290,5 +284,26 @@ function Indice({ marca }: { marca?: string }) {
         </section>
       ))}
     </div>
+  );
+}
+
+export function Tarjeta({ href, numero, titulo, resumen, accion, estado }: {
+  href: string;
+  numero: string;
+  titulo: string;
+  resumen: string;
+  accion: string;
+  estado?: 'Autoevaluada' | 'Abierta';
+}) {
+  return (
+    <a className="tarjeta" href={href} onPointerMove={foco}>
+      <span className="t-cab">
+        <span className="t-num">{numero}</span>
+        {estado && <span className="t-estado" data-hecho={estado === 'Autoevaluada' || undefined}>{estado}</span>}
+      </span>
+      <span className="t-titulo">{titulo}</span>
+      <span className="t-res">{resumen}</span>
+      <span className="t-ir" aria-hidden="true">{accion}<Icon icon={IcoFlecha} size="sm" /></span>
+    </a>
   );
 }
