@@ -424,6 +424,8 @@
     .pie-redes { grid-template-columns: minmax(0, 1fr); }
     .rec-barra { gap: 4px; }
     .boton-indice { padding: 0 12px; }
+    .cab { gap: 6px; }
+    .volver-asignaturas span { display: none; }
     .lam-titulo { grid-template-columns: 1fr; }
     .lam-formula { grid-column: 1; }
     .panel { padding: 18px 16px; }

@@ -1,4 +1,4 @@
-import { Isotipo, SelectorTema, Tarjeta, foco, type Tema } from './App.tsx';
+import { Isotipo, Pie, SelectorTema, Tarjeta, foco, type Tema } from './App.tsx';
 import { Particulas } from './ui/Particulas.tsx';
 
 const asignaturas = [
@@ -40,18 +40,11 @@ export function Portada({ tema, setTema }: { tema: Tema; setTema: (t: Tema) => v
           </section>
         </div>
       </main>
-      <footer className="pie">
-        <div className="pie-in">
-          <div className="pie-marca">
-            <a className="marca" href="https://digitalsynapse.es"><Isotipo size={28} /><span>DigitalSynapse</span></a>
-            <p>Apuntes de estudio de Synji para 1.º de DAM.</p>
-          </div>
-          <nav className="pie-col" aria-label="Repositorio">
-            <a href="https://github.com/Splurtch/retos_programacion_dam">Ver el repositorio y los retos</a>
-          </nav>
-        </div>
-        <div className="pie-base"><span>© 2026 Synji · DigitalSynapse</span><span>Tu progreso se guarda en este navegador.</span></div>
-      </footer>
+      <Pie titulo="El cuaderno" descripcion="Apuntes de estudio de Synji para 1.º de DAM."
+        enlaces={[
+          ...asignaturas.map(({ ruta, titulo }): [string, string] => [titulo, `./${ruta}/`]),
+          ['Repositorio y retos', 'https://github.com/Splurtch/retos_programacion_dam'],
+        ]} />
     </>
   );
 }

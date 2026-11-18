@@ -3,7 +3,7 @@ import { flushSync } from 'react-dom';
 import { Icon } from '@astryxdesign/core/Icon';
 import { CARGAR, FAMILIAS, LAMINAS, enlace, type Familia, type Modulo } from './laminas/index.ts';
 import { guardar, leer } from './ui/guia.tsx';
-import { IcoBandera, IcoFlecha, IcoGithub, IcoGlobo, IcoLibro, IcoLinkedin, IcoLuna, IcoPantalla, IcoSol, IcoSubstack } from './ui/iconos.tsx';
+import { IcoAtras, IcoBandera, IcoFlecha, IcoGithub, IcoGlobo, IcoLibro, IcoLinkedin, IcoLuna, IcoPantalla, IcoSol, IcoSubstack } from './ui/iconos.tsx';
 import { Particulas } from './ui/Particulas.tsx';
 import { Glosario } from './paginas/Glosario.tsx';
 import { Clases } from './paginas/Clases.tsx';
@@ -100,6 +100,9 @@ export function App({ tema, setTema }: { tema: Tema; setTema: (t: Tema) => void 
         {marcaMeta && marcaMeta.id !== meta?.id && (
           <a className="banderola" href={enlace(marcaMeta.id)}><Icon icon={IcoBandera} size="sm" /><span>Lo dejaste en la lámina {marcaMeta.num}</span></a>
         )}
+        <a className="boton-indice volver-asignaturas" href="../" aria-label="Volver a las asignaturas" title="Volver a las asignaturas">
+          <Icon icon={IcoAtras} size="sm" /><span>Asignaturas</span>
+        </a>
         <a className="boton-indice" href="#/"><Icon icon={IcoLibro} size="sm" />Índice</a>
         <SelectorTema tema={tema} setTema={setTema} />
       </header>
@@ -115,38 +118,14 @@ export function App({ tema, setTema }: { tema: Tema; setTema: (t: Tema) => void 
         {meta ? <LaminaVista key={meta.id} id={meta.id} seccion={seccion} /> : ruta === 'glosario' ? <Glosario /> : ruta === 'clases' ? <Clases /> : <Indice marca={marcaMeta?.id} />}
       </main>
 
-      <footer className="pie">
-        <div className="pie-in">
-          <div className="pie-marca">
-            <a className="marca" href="https://digitalsynapse.es" target="_blank" rel="noopener noreferrer"><Isotipo size={28} /><span>DigitalSynapse</span></a>
-            <p>Guía de campo de C#: material de estudio personal del módulo 0485 Programación, 1.º DAM, Ucademy 2026-27. Hecha por Synji para aprobar sin copiar.</p>
-          </div>
-          <nav className="pie-col" aria-labelledby="pie-guia">
-            <h2 id="pie-guia">La guía</h2>
-            <ul>
-              <li><a href="#/">Índice de láminas</a></li>
-              <li><a href="#/glosario">Glosario</a></li>
-              <li><a href="#/clases">Diario de clases</a></li>
-              <li><a href={enlace('reto1')}>Reto 1</a></li>
-            </ul>
-          </nav>
-          <nav className="pie-col" aria-labelledby="pie-redes">
-            <h2 id="pie-redes">Synji en la red</h2>
-            <ul className="pie-redes">
-              {REDES.map(([nombre, url, Ico]) => (
-                <li key={nombre}>
-                  <a href={url} target="_blank" rel="noopener noreferrer">
-                    <span className="red-ico"><Icon icon={Ico} size="sm" /></span>
-                    <span className="red-txt"><b>{nombre}</b><small>{url.replace(/^https:\/\/(www\.)?/, '')}</small></span>
-                    <Icon icon={IcoFlecha} size="sm" />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-        <div className="pie-base"><span>© 2026 Synji · DigitalSynapse</span><span>Sin cuentas ni servidores: tu progreso se guarda solo en este navegador.</span></div>
-      </footer>
+      <Pie titulo="La guía"
+        descripcion="Guía de campo de C#: material de estudio personal del módulo 0485 Programación, 1.º DAM, Ucademy 2026-27. Hecha por Synji para aprobar sin copiar."
+        enlaces={[
+          ['Índice de láminas', '#/'],
+          ['Glosario', '#/glosario'],
+          ['Diario de clases', '#/clases'],
+          ['Reto 1', enlace('reto1')],
+        ]} />
     </div>
   );
 }
@@ -305,5 +284,43 @@ export function Tarjeta({ href, numero, titulo, resumen, accion, estado }: {
       <span className="t-res">{resumen}</span>
       <span className="t-ir" aria-hidden="true">{accion}<Icon icon={IcoFlecha} size="sm" /></span>
     </a>
+  );
+}
+
+export function Pie({ titulo, descripcion, enlaces }: {
+  titulo: string;
+  descripcion: string;
+  enlaces: [string, string][];
+}) {
+  return (
+    <footer className="pie">
+      <div className="pie-in">
+        <div className="pie-marca">
+          <a className="marca" href="https://digitalsynapse.es" target="_blank" rel="noopener noreferrer"><Isotipo size={28} /><span>DigitalSynapse</span></a>
+          <p>{descripcion}</p>
+        </div>
+        <nav className="pie-col" aria-labelledby="pie-guia">
+          <h2 id="pie-guia">{titulo}</h2>
+          <ul>
+            {enlaces.map(([texto, href]) => <li key={href}><a href={href}>{texto}</a></li>)}
+          </ul>
+        </nav>
+        <nav className="pie-col" aria-labelledby="pie-redes">
+          <h2 id="pie-redes">Synji en la red</h2>
+          <ul className="pie-redes">
+            {REDES.map(([nombre, url, Ico]) => (
+              <li key={nombre}>
+                <a href={url} target="_blank" rel="noopener noreferrer">
+                  <span className="red-ico"><Icon icon={Ico} size="sm" /></span>
+                  <span className="red-txt"><b>{nombre}</b><small>{url.replace(/^https:\/\/(www\.)?/, '')}</small></span>
+                  <Icon icon={IcoFlecha} size="sm" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+      <div className="pie-base"><span>© 2026 Synji · DigitalSynapse</span><span>Sin cuentas ni servidores: tu progreso se guarda solo en este navegador.</span></div>
+    </footer>
   );
 }

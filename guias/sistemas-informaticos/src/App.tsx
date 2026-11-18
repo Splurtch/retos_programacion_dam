@@ -3,7 +3,7 @@ import { flushSync } from 'react-dom';
 import { Icon } from '@astryxdesign/core/Icon';
 import { CARGAR, FAMILIAS, LAMINAS, enlace, type Familia, type Modulo } from './laminas/index.ts';
 import { guardar, leer } from './ui/guia.tsx';
-import { IcoBandera, IcoFlecha, IcoGithub, IcoGlobo, IcoLibro, IcoLinkedin, IcoLuna, IcoPantalla, IcoSol, IcoSubstack } from './ui/iconos.tsx';
+import { IcoAtras, IcoBandera, IcoFlecha, IcoGithub, IcoGlobo, IcoLibro, IcoLinkedin, IcoLuna, IcoPantalla, IcoSol, IcoSubstack } from './ui/iconos.tsx';
 import { Particulas } from './ui/Particulas.tsx';
 import { Glosario } from './paginas/Glosario.tsx';
 import { Clases } from './paginas/Clases.tsx';
@@ -100,6 +100,9 @@ export function App({ tema, setTema }: { tema: Tema; setTema: (t: Tema) => void 
         {marcaMeta && marcaMeta.id !== meta?.id && (
           <a className="banderola" href={enlace(marcaMeta.id)}><Icon icon={IcoBandera} size="sm" /><span>Lo dejaste en la lámina {marcaMeta.num}</span></a>
         )}
+        <a className="boton-indice volver-asignaturas" href="../" aria-label="Volver a las asignaturas" title="Volver a las asignaturas">
+          <Icon icon={IcoAtras} size="sm" /><span>Asignaturas</span>
+        </a>
         <a className="boton-indice" href="#/"><Icon icon={IcoLibro} size="sm" />Índice</a>
         <SelectorTema tema={tema} setTema={setTema} />
       </header>
